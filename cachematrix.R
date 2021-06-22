@@ -1,15 +1,33 @@
-## Put comments here that give an overall description of what your
-## functions do
+## input is a square matrix
 
-## Write a short comment describing this function
 
+## solves matrix
 makeCacheMatrix <- function(x = matrix()) {
+  S <- NULL
+  set <- function(y) {
+    x <<- y
+    S <<- NULL
+  }
+  get <- function() x
+  setsolve <- function(solve) S <<- solve
+  getsolve <- function() S
+  list(set = set, get = get,
+       setsolve = setsolve,
+       getsolve = getsolve)
 
 }
 
 
-## Write a short comment describing this function
-
+## function caches solved matrix
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  S <- x$getsolve()
+  if(!is.null(S)) {
+    message("Getting solved matrix")
+    return(S)
+  }
+  dat <- x$get()
+  S <- solve(dat, ...)
+  x$setsolve(S)
+  S
 }
+
